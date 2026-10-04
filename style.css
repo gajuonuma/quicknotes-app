@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f2f4f7;
+    color: #222;
+}
+
+header {
+    background-color: #176b87;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+}
+
+header p {
+    margin: 0;
+}
+
+main {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+section {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+}
+
+section h2 {
+    margin-top: 0;
+}
+
+#note-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#note-form input,
+#note-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+}
+
+#note-input {
+    flex: 1;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #176b87;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0f4f64;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+}
+
+#note-count {
+    font-weight: bold;
+}
+
+#notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#notes-list li {
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background-color: #fafafa;
+}
+
+.category-personal {
+    border-left: 5px solid teal !important;
+}
+
+.category-work {
+    border-left: 5px solid darkred !important;
+}
+
+.category-study {
+    border-left: 5px solid blue !important;
+}
+
+#error-message {
+    color: red;
+    min-height: 24px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    color: #555;
+}
+
+@media (max-width: 600px) {
+    #note-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #note-form input,
+    #note-form select,
+    #note-form button {
+        width: 100%;
+    }
+
+    main {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+
+    section {
+        padding: 20px;
+    }
+}
