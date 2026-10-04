@@ -6,7 +6,28 @@ const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 const searchInput = document.querySelector("#search-input");
 
+const STORAGE_KEY = "quicknotes-notes";
+
 let notes = [];
+
+
+function saveNotes() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
+
+
+function loadNotes() {
+    const savedNotes = localStorage.getItem(STORAGE_KEY);
+
+    if (savedNotes !== null) {
+        try {
+            notes = JSON.parse(savedNotes);
+        } catch (error) {
+            notes = [];
+            localStorage.removeItem(STORAGE_KEY);
+        }
+    }
+}
 
 
 function render(notesToRender = notes) {
@@ -77,6 +98,8 @@ function addNote(text, category) {
 
     notes.push(newNote);
 
+    saveNotes();
+
     errorMessage.textContent = "";
 
     return true;
@@ -88,7 +111,22 @@ function deleteNote(id) {
         return note.id !== id;
     });
 
+    saveNotes();
+
     render();
+}
+
+
+function searchNotes(searchTerm) {
+    const term = searchTerm.trim().toLowerCase();
+
+    if (term === "") {
+        return notes;
+    }
+
+    return notes.filter(function(note) {
+        return note.text.toLowerCase().includes(term);
+    });
 }
 
 
@@ -108,4 +146,12 @@ noteForm.addEventListener("submit", function(event) {
 });
 
 
+searchInput.addEventListener("input", function() {
+    const filteredNotes = searchNotes(searchInput.value);
+
+    render(filteredNotes);
+});
+
+
+loadNotes();
 render();
