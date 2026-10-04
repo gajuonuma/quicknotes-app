@@ -44,6 +44,10 @@ function render(notesToRender = notes) {
         const noteCategoryText = document.createElement("small");
         noteCategoryText.textContent = `Category: ${note.category}`;
 
+        const noteDate = document.createElement("small");
+        const formattedDate = new Date(note.createdAt).toLocaleString();
+        noteDate.textContent = `Created: ${formattedDate}`;
+
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.textContent = "Delete";
@@ -54,6 +58,9 @@ function render(notesToRender = notes) {
 
         listItem.appendChild(noteText);
         listItem.appendChild(noteCategoryText);
+        listItem.appendChild(document.createElement("br"));
+        listItem.appendChild(noteDate);
+        listItem.appendChild(document.createElement("br"));
         listItem.appendChild(deleteButton);
 
         notesList.appendChild(listItem);
