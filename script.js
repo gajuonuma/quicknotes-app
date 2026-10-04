@@ -74,11 +74,11 @@ function updateCount(notesToCount) {
     const count = notesToCount.length;
 
     if (count === 0) {
-        noteCount.textContent = "No notes";
+        noteCount.textContent = "You have no notes yet.";
     } else if (count === 1) {
-        noteCount.textContent = "1 note";
+        noteCount.textContent = "You have 1 note.";
     } else {
-        noteCount.textContent = `${count} notes`;
+        noteCount.textContent = `You have ${count} notes.`;
     }
 }
 
@@ -87,12 +87,12 @@ function addNote(text, category) {
     const trimmedText = text.trim();
 
     if (trimmedText.length === 0) {
-        errorMessage.textContent = "Please enter a note.";
+        errorMessage.textContent = "Please type a note first.";
         return false;
     }
 
     if (trimmedText.length > 200) {
-        errorMessage.textContent = "Note cannot be more than 200 characters.";
+        errorMessage.textContent = "Notes must be 200 characters or fewer.";
         return false;
     }
 
