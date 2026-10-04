@@ -30,40 +30,46 @@ function loadNotes() {
 }
 
 
-function render(notesToRender = notes) {
+function render(notesToRender = notes, isSearching = false) {
     notesList.replaceChildren();
 
-    for (const note of notesToRender) {
-        const listItem = document.createElement("li");
+    if (notesToRender.length === 0 && isSearching) {
+        const emptyMessage = document.createElement("li");
+        emptyMessage.textContent = "No notes match your search.";
+        notesList.appendChild(emptyMessage);
+    } else {
+        for (const note of notesToRender) {
+            const listItem = document.createElement("li");
 
-        listItem.classList.add(`category-${note.category}`);
+            listItem.classList.add(`category-${note.category}`);
 
-        const noteText = document.createElement("p");
-        noteText.textContent = note.text;
+            const noteText = document.createElement("p");
+            noteText.textContent = note.text;
 
-        const noteCategoryText = document.createElement("small");
-        noteCategoryText.textContent = `Category: ${note.category}`;
+            const noteCategoryText = document.createElement("small");
+            noteCategoryText.textContent = `Category: ${note.category}`;
 
-        const noteDate = document.createElement("small");
-        const formattedDate = new Date(note.createdAt).toLocaleString();
-        noteDate.textContent = `Created: ${formattedDate}`;
+            const noteDate = document.createElement("small");
+            const formattedDate = new Date(note.createdAt).toLocaleString();
+            noteDate.textContent = `Created: ${formattedDate}`;
 
-        const deleteButton = document.createElement("button");
-        deleteButton.type = "button";
-        deleteButton.textContent = "Delete";
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.textContent = "Delete";
 
-        deleteButton.addEventListener("click", function() {
-            deleteNote(note.id);
-        });
+            deleteButton.addEventListener("click", function() {
+                deleteNote(note.id);
+            });
 
-        listItem.appendChild(noteText);
-        listItem.appendChild(noteCategoryText);
-        listItem.appendChild(document.createElement("br"));
-        listItem.appendChild(noteDate);
-        listItem.appendChild(document.createElement("br"));
-        listItem.appendChild(deleteButton);
+            listItem.appendChild(noteText);
+            listItem.appendChild(noteCategoryText);
+            listItem.appendChild(document.createElement("br"));
+            listItem.appendChild(noteDate);
+            listItem.appendChild(document.createElement("br"));
+            listItem.appendChild(deleteButton);
 
-        notesList.appendChild(listItem);
+            notesList.appendChild(listItem);
+        }
     }
 
     updateCount(notesToRender);
@@ -120,7 +126,10 @@ function deleteNote(id) {
 
     saveNotes();
 
-    render();
+    const filteredNotes = searchNotes(searchInput.value);
+    const isSearching = searchInput.value.trim() !== "";
+
+    render(filteredNotes, isSearching);
 }
 
 
@@ -148,15 +157,20 @@ noteForm.addEventListener("submit", function(event) {
     if (wasAdded) {
         noteInput.value = "";
         noteCategory.value = "personal";
-        render();
+
+        const filteredNotes = searchNotes(searchInput.value);
+        const isSearching = searchInput.value.trim() !== "";
+
+        render(filteredNotes, isSearching);
     }
 });
 
 
 searchInput.addEventListener("input", function() {
     const filteredNotes = searchNotes(searchInput.value);
+    const isSearching = searchInput.value.trim() !== "";
 
-    render(filteredNotes);
+    render(filteredNotes, isSearching);
 });
 
 
